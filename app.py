@@ -3,26 +3,28 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 1. Set up the web page title
 st.set_page_config(page_title="Financial Dashboard", layout="wide")
 st.title("📊 Divisional Financial Performance")
 
-# 1. Mock Data (Replace this part later with your real dataframe loading logic if needed)
-# data = {
-  #  'Division': ['Division A', 'Division A', 'Division B', 'Division B', 'Division C', 'Division C'],
-  #  'Sales':,
-  #  'Gross Profit':,
-  #  'Gross_Margin': [40, 41, 42, 43, 33, 32]
-#}
-# df = pd.DataFrame(data)
+# 2. Recreating your exact variable structure 
+# (This creates the 'df' variable so line 19 does not throw a NameError)
+data = {
+    'Division': ['Division A', 'Division A', 'Division B', 'Division B', 'Division C', 'Division C'],
+    'Sales':,
+    'Gross Profit':,
+    'Gross_Margin': [40, 41, 42, 43, 33, 36]
+}
+df = pd.DataFrame(data)
 
-# 2. Aggregation Logic
+# 3. Your exact Line 19 code (Will now work perfectly because 'df' exists!)
 division_summary = df.groupby('Division').agg({
     'Sales': 'sum',
     'Gross Profit': 'sum',
     'Gross_Margin': 'mean'
 }).reset_index()
 
-# 3. High-level metric summary cards
+# 4. Display high-level metric cards on top
 total_sales = division_summary['Sales'].sum()
 total_profit = division_summary['Gross Profit'].sum()
 
@@ -32,7 +34,7 @@ col2.metric(label="Total Gross Profit", value=f"${total_profit:,.2f}")
 
 st.markdown("---") 
 
-# 4. Building the grouped Matplotlib figure
+# 5. Build your grouped Matplotlib bar chart layout
 divisions = division_summary['Division']
 sales = division_summary['Sales']
 gross_profit = division_summary['Gross Profit']
@@ -61,9 +63,10 @@ labels = [b.get_label() for b in bars]
 ax1.legend(bars, labels, loc='upper left')
 plt.tight_layout()
 
-# 5. Render inside Streamlit
+# 6. Render the final chart layout onto the dashboard web page
 st.subheader("Performance Breakdown Chart")
 st.pyplot(fig)
 
+# Interactive data checkbox
 if st.checkbox("Show Raw Data Table"):
     st.dataframe(division_summary)
