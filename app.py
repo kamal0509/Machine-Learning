@@ -3,28 +3,27 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 1. Set up the web page title
+# 1. Page Configuration
 st.set_page_config(page_title="Financial Dashboard", layout="wide")
 st.title("📊 Divisional Financial Performance")
 
-# 2. Recreating your exact variable structure 
-# (This creates the 'df' variable so line 19 does not throw a NameError)
+# 2. FIXED DATA DICTIONARY (No empty commas!)
 data = {
-    'Division': ['Division A', 'Division A', 'Division B', 'Division B', 'Division C', 'Division C'],
+    'Division': ['Division A', 'Division B', 'Division C'],
     'Sales':,
     'Gross Profit':,
-    'Gross_Margin': [40, 40, 40, 40, 30, 30]
+    'Gross_Margin': [40, 40, 30]
 }
 df = pd.DataFrame(data)
 
-# 3. Your exact Line 19 code (Will now work perfectly because 'df' exists!)
+# 3. Create Summary Table
 division_summary = df.groupby('Division').agg({
     'Sales': 'sum',
     'Gross Profit': 'sum',
     'Gross_Margin': 'mean'
 }).reset_index()
 
-# 4. Display high-level metric cards on top
+# 4. Display high-level metric cards
 total_sales = division_summary['Sales'].sum()
 total_profit = division_summary['Gross Profit'].sum()
 
@@ -34,7 +33,7 @@ col2.metric(label="Total Gross Profit", value=f"${total_profit:,.2f}")
 
 st.markdown("---") 
 
-# 5. Build your grouped Matplotlib bar chart layout
+# 5. Build Grouped Chart Layout
 divisions = division_summary['Division']
 sales = division_summary['Sales']
 gross_profit = division_summary['Gross Profit']
@@ -63,10 +62,9 @@ labels = [b.get_label() for b in bars]
 ax1.legend(bars, labels, loc='upper left')
 plt.tight_layout()
 
-# 6. Render the final chart layout onto the dashboard web page
+# 6. Render inside Streamlit
 st.subheader("Performance Breakdown Chart")
 st.pyplot(fig)
 
-# Interactive data checkbox
 if st.checkbox("Show Raw Data Table"):
     st.dataframe(division_summary)
