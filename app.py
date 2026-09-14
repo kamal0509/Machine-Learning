@@ -13,7 +13,7 @@ data = {
     'Division': ['Division A', 'Division A', 'Division B', 'Division B', 'Division C', 'Division C'],
     'Sales':,
     'Gross Profit':,
-    'Gross_Margin': [40, 41, 42, 43, 33, 36]
+    'Gross_Margin': [40, 40, 40, 40, 30, 30]
 }
 df = pd.DataFrame(data)
 
